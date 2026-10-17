@@ -1,0 +1,191 @@
+{
+  "devices": {
+    "domain": {
+      "external_id": "ext:test-integration:domain:xn--caf-dma.fr",
+      "should_poll": false,
+      "params": ["DOMAIN"],
+      "features": [
+        {
+          "external_id": "ext:test-integration:domain:xn--caf-dma.fr:days_left",
+          "category": "duration",
+          "type": "integer",
+          "unit": "days",
+          "min": -100,
+          "max": 3700,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:domain:xn--caf-dma.fr:expiration_date",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:domain:xn--caf-dma.fr:registrar",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:domain:xn--caf-dma.fr:state",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "config_schema": [
+      {
+        "key": "intro",
+        "type": "section"
+      },
+      {
+        "key": "domains",
+        "type": "string"
+      },
+      {
+        "key": "language",
+        "type": "select"
+      }
+    ],
+    "actions": ["check_domain", "refresh", "diagnostic"],
+    "scene_triggers": [
+      {
+        "key": "domain_expiring",
+        "fields": [
+          {
+            "key": "domain",
+            "options": []
+          },
+          {
+            "key": "days",
+            "options": ["90", "60", "30", "14", "7", "3", "1", "0"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "domain_name",
+            "type": "string"
+          },
+          {
+            "key": "days_left",
+            "type": "number"
+          },
+          {
+            "key": "expiration_date",
+            "type": "string"
+          },
+          {
+            "key": "expiration_iso",
+            "type": "string"
+          },
+          {
+            "key": "registrar",
+            "type": "string"
+          },
+          {
+            "key": "days",
+            "type": "string"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "domain_renewed",
+        "fields": [
+          {
+            "key": "domain",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "domain_name",
+            "type": "string"
+          },
+          {
+            "key": "expiration_date",
+            "type": "string"
+          },
+          {
+            "key": "previous_expiration_date",
+            "type": "string"
+          },
+          {
+            "key": "expiration_iso",
+            "type": "string"
+          },
+          {
+            "key": "days_left",
+            "type": "number"
+          },
+          {
+            "key": "registrar",
+            "type": "string"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "scene_actions": [
+      {
+        "key": "get_domain",
+        "fields": ["domain"],
+        "outputs": [
+          {
+            "key": "domain_name",
+            "type": "string"
+          },
+          {
+            "key": "days_left",
+            "type": "number"
+          },
+          {
+            "key": "expiration_date",
+            "type": "string"
+          },
+          {
+            "key": "expiration_iso",
+            "type": "string"
+          },
+          {
+            "key": "registrar",
+            "type": "string"
+          },
+          {
+            "key": "state",
+            "type": "string"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "widgets": [
+      {
+        "key": "domains",
+        "settings": []
+      }
+    ]
+  }
+}

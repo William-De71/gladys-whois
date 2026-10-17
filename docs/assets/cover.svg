@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="534" viewBox="0 0 800 534">
+  <!-- Cover of the Whois integration for Gladys Assistant (illustration).
+       Built into cover.jpg by scripts/build-cover.sh. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1b2e"/>
+      <stop offset="1" stop-color="#16324f"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="534" fill="url(#bg)"/>
+  <!-- meridians and parallels of a globe -->
+  <g transform="translate(250 190)" fill="none" stroke="#3d7fbf" stroke-width="3">
+    <circle r="120" stroke="#7fb8ef" stroke-width="5"/>
+    <ellipse rx="55" ry="120"/>
+    <ellipse rx="100" ry="120"/>
+    <path d="M0 -120 V120"/>
+    <path d="M-120 0 H120 M-104 -60 H104 M-104 60 H104"/>
+  </g>
+  <!-- the calendar page with the countdown -->
+  <g transform="translate(450 70)">
+    <rect width="250" height="250" rx="22" fill="#ffffff"/>
+    <path d="M0 22 a22 22 0 0 1 22 -22 h206 a22 22 0 0 1 22 22 v48 h-250 z" fill="#d64545"/>
+    <circle cx="62" cy="0" r="10" fill="#0d1b2e"/>
+    <circle cx="188" cy="0" r="10" fill="#0d1b2e"/>
+    <text x="125" y="52" fill="#ffffff" font-family="DejaVu Sans, Arial, sans-serif" font-size="26" font-weight="bold" text-anchor="middle">EXPIRES IN</text>
+    <text x="125" y="178" fill="#0d1b2e" font-family="DejaVu Sans, Arial, sans-serif" font-size="104" font-weight="bold" text-anchor="middle">30</text>
+    <text x="125" y="222" fill="#57606a" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" text-anchor="middle">days</text>
+  </g>
+  <!-- title -->
+  <rect x="0" y="372" width="800" height="162" fill="#071a2d" fill-opacity="0.8"/>
+  <text x="400" y="438" fill="#ffffff" font-family="DejaVu Sans, Arial, sans-serif" font-size="58" font-weight="bold" text-anchor="middle">Whois</text>
+  <text x="400" y="480" fill="#c8d9ea" font-family="DejaVu Sans, Arial, sans-serif" font-size="26" text-anchor="middle">for Gladys Assistant</text>
+  <text x="400" y="514" fill="#8fb0cc" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" text-anchor="middle">Domain expiration · days left · registrar · RDAP and whois</text>
+</svg>

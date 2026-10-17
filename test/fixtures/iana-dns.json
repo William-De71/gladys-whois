@@ -1,0 +1,18 @@
+{
+  "description": "RDAP bootstrap file for Domain Name System registrations",
+  "publication": "2026-09-30T23:00:03Z",
+  "services": [
+    [["app", "dev"], ["https://pubapi.registry.google/rdap/"]],
+    [["info"], ["https://rdap.identitydigital.services/rdap/"]],
+    [["bzh"], ["https://rdap.nic.bzh/"]],
+    [["fr"], ["https://rdap.nic.fr/"]],
+    [["paris"], ["https://rdap.nic.paris/"]],
+    [["re"], ["https://rdap.nic.re/"]],
+    [["uk"], ["https://rdap.nominet.uk/uk/"]],
+    [["org"], ["https://rdap.publicinterestregistry.org/rdap/"]],
+    [["nl"], ["https://rdap.sidn.nl/"]],
+    [["com"], ["https://rdap.verisign.com/com/v1/"]],
+    [["net"], ["https://rdap.verisign.com/net/v1/"]]
+  ],
+  "version": "1.0"
+}

@@ -1,0 +1,11 @@
+Gladys Whois integration
+Copyright 2026 William Deren
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Registration data (expiration dates, registrars, statuses) belongs to the
+domain registries. It is read at run time from their public RDAP and whois
+services, located through the lists of the IANA; test/fixtures holds a few
+answers recorded for the tests (the contact blocks of the .it answer removed).
+This community integration is not affiliated with, endorsed or sponsored by
+any registry, registrar or the IANA.

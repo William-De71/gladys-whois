@@ -1,0 +1,710 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "Whois",
+  "description": {
+    "en": "Expiration of your domain names (RDAP, whois): days left, registrar, scenes.",
+    "fr": "Expiration de vos noms de domaine (RDAP, whois) : jours restants, registrar, scènes.",
+    "de": "Ablauf Ihrer Domainnamen (RDAP, Whois): verbleibende Tage, Registrar, Szenen.",
+    "es": "Caducidad de sus dominios (RDAP, whois): días restantes, registrador, escenas."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-whois:0.1.0",
+  "gladys_version": ">=5.1.0",
+  "categories": ["network"],
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-whois/main/cover.jpg",
+  "transports": ["cloud"],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Domains",
+        "fr": "Domaines",
+        "de": "Domains",
+        "es": "Dominios"
+      },
+      "description": {
+        "en": "Each domain is checked once a day with its registry: RDAP, or whois for the extensions without RDAP. No account, no key. Up to ten domains; each one becomes a device on the Discovery screen.",
+        "fr": "Chaque domaine est vérifié une fois par jour auprès de son registre : RDAP, ou whois pour les extensions sans RDAP. Sans compte ni clé. Jusqu’à dix domaines ; chacun devient un appareil dans l’écran de découverte.",
+        "de": "Jede Domain wird einmal täglich bei ihrer Registry geprüft: RDAP, oder Whois für Endungen ohne RDAP. Kein Konto, kein Schlüssel. Bis zu zehn Domains; jede wird ein Gerät im Erkennungsbildschirm.",
+        "es": "Cada dominio se comprueba una vez al día con su registro: RDAP, o whois para las extensiones sin RDAP. Sin cuenta ni clave. Hasta diez dominios; cada uno se convierte en un dispositivo en la pantalla de descubrimiento."
+      },
+      "links": [
+        {
+          "url": "https://lookup.icann.org/",
+          "label": {
+            "en": "ICANN lookup",
+            "fr": "Recherche ICANN",
+            "de": "ICANN-Abfrage",
+            "es": "Búsqueda de ICANN"
+          }
+        }
+      ]
+    },
+    {
+      "key": "domains",
+      "type": "string",
+      "label": {
+        "en": "Domain names",
+        "fr": "Noms de domaine",
+        "de": "Domainnamen",
+        "es": "Nombres de dominio"
+      },
+      "description": {
+        "en": "Separated by commas. A web address is accepted: https://www.example.fr/ is read as example.fr.",
+        "fr": "Séparés par des virgules. Une adresse web est acceptée : https://www.exemple.fr/ est lue comme exemple.fr.",
+        "de": "Durch Kommas getrennt. Eine Webadresse geht auch: https://www.example.de/ wird als example.de gelesen.",
+        "es": "Separados por comas. Se acepta una dirección web: https://www.ejemplo.es/ se lee como ejemplo.es."
+      },
+      "placeholder": {
+        "en": "example.com, example.fr",
+        "fr": "exemple.com, exemple.fr",
+        "de": "example.com, example.de",
+        "es": "ejemplo.com, ejemplo.es"
+      },
+      "required": false
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "label": {
+        "en": "Language of the texts",
+        "fr": "Langue des textes",
+        "de": "Sprache der Texte",
+        "es": "Idioma de los textos"
+      },
+      "description": {
+        "en": "Feature names, text states and scene summaries. Automatic: the language of your dashboard, once the widget has been displayed (French before that).",
+        "fr": "Noms des fonctionnalités, états texte et résumés des scènes. Automatique : la langue de votre tableau de bord, dès que le widget a été affiché (français avant).",
+        "de": "Namen der Funktionen, Textzustände und Szenen-Zusammenfassungen. Automatisch: die Sprache Ihres Dashboards, sobald das Widget angezeigt wurde (vorher Französisch).",
+        "es": "Nombres de funciones, estados de texto y resúmenes de escenas. Automático: el idioma de su panel, en cuanto se haya mostrado el widget (francés antes)."
+      },
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "de": "Automatisch",
+            "es": "Automático"
+          }
+        },
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "English",
+            "de": "English",
+            "es": "English"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "Français",
+            "fr": "Français",
+            "de": "Français",
+            "es": "Français"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "Deutsch",
+            "fr": "Deutsch",
+            "de": "Deutsch",
+            "es": "Deutsch"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Español",
+            "fr": "Español",
+            "de": "Español",
+            "es": "Español"
+          }
+        }
+      ],
+      "default": "auto",
+      "required": false
+    }
+  ],
+  "actions": [
+    {
+      "key": "check_domain",
+      "label": {
+        "en": "Check a domain",
+        "fr": "Vérifier un domaine",
+        "de": "Domain prüfen",
+        "es": "Comprobar un dominio"
+      },
+      "description": {
+        "en": "Asks the registry of any domain now, without following it.",
+        "fr": "Interroge maintenant le registre d’un domaine, sans le suivre.",
+        "de": "Fragt jetzt die Registry einer Domain ab, ohne sie zu überwachen.",
+        "es": "Consulta ahora el registro de un dominio, sin seguirlo."
+      },
+      "timeout_seconds": 45,
+      "fields": [
+        {
+          "key": "domain",
+          "type": "string",
+          "label": {
+            "en": "Domain name",
+            "fr": "Nom de domaine",
+            "de": "Domainname",
+            "es": "Nombre de dominio"
+          },
+          "placeholder": {
+            "en": "example.com",
+            "fr": "exemple.fr",
+            "de": "example.de",
+            "es": "ejemplo.es"
+          },
+          "required": true
+        }
+      ]
+    },
+    {
+      "key": "refresh",
+      "label": {
+        "en": "Check now",
+        "fr": "Vérifier maintenant",
+        "de": "Jetzt prüfen",
+        "es": "Comprobar ahora"
+      },
+      "description": {
+        "en": "Checks every domain again (done once a day on its own).",
+        "fr": "Vérifie à nouveau chaque domaine (fait seul une fois par jour).",
+        "de": "Prüft alle Domains erneut (geschieht sonst einmal täglich).",
+        "es": "Vuelve a comprobar cada dominio (se hace solo una vez al día)."
+      },
+      "timeout_seconds": 120
+    },
+    {
+      "key": "diagnostic",
+      "label": {
+        "en": "Diagnostic",
+        "fr": "Diagnostic",
+        "de": "Diagnose",
+        "es": "Diagnóstico"
+      },
+      "description": {
+        "en": "Writes the state of the integration to the Logs tab, to attach to a bug report.",
+        "fr": "Écrit l’état de l’intégration dans l’onglet Journaux, à joindre à un rapport de bug.",
+        "de": "Schreibt den Zustand der Integration in den Reiter Protokolle, für einen Fehlerbericht.",
+        "es": "Escribe el estado de la integración en la pestaña Registros, para adjuntar a un informe de error."
+      },
+      "timeout_seconds": 10
+    }
+  ],
+  "widgets": [
+    {
+      "key": "domains",
+      "label": {
+        "en": "Domain names",
+        "fr": "Noms de domaine",
+        "de": "Domainnamen",
+        "es": "Nombres de dominio"
+      },
+      "description": {
+        "en": "Your domains, the closest expiration first, with the days left.",
+        "fr": "Vos domaines, l’expiration la plus proche en premier, avec les jours restants.",
+        "de": "Ihre Domains, der nächste Ablauf zuerst, mit den verbleibenden Tagen.",
+        "es": "Sus dominios, la caducidad más próxima primero, con los días restantes."
+      },
+      "icon": "globe"
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "domain_expiring",
+      "label": {
+        "en": "Domain: expires soon",
+        "fr": "Domaine : expire bientôt",
+        "de": "Domain: läuft bald ab",
+        "es": "Dominio: caduca pronto"
+      },
+      "description": {
+        "en": "The domain expires in N days or less (once per expiration date).",
+        "fr": "Le domaine expire dans N jours ou moins (une fois par date d’expiration).",
+        "de": "Die Domain läuft in N Tagen oder weniger ab (einmal pro Ablaufdatum).",
+        "es": "El dominio caduca en N días o menos (una vez por fecha de caducidad)."
+      },
+      "fields": [
+        {
+          "key": "domain",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Domain",
+            "fr": "Domaine",
+            "de": "Domain",
+            "es": "Dominio"
+          },
+          "description": {
+            "en": "A domain device. Leave empty for any.",
+            "fr": "Un appareil domaine. Laissez vide pour tous.",
+            "de": "Ein Domain-Gerät. Leer lassen für jedes.",
+            "es": "Un dispositivo de dominio. Vacío para cualquiera."
+          },
+          "required": false
+        },
+        {
+          "key": "days",
+          "type": "select",
+          "label": {
+            "en": "Expires in",
+            "fr": "Expire dans",
+            "de": "Läuft ab in",
+            "es": "Caduca en"
+          },
+          "options": [
+            {
+              "value": "90",
+              "label": {
+                "en": "90 days or less",
+                "fr": "90 jours ou moins",
+                "de": "90 Tage oder weniger",
+                "es": "90 días o menos"
+              }
+            },
+            {
+              "value": "60",
+              "label": {
+                "en": "60 days or less",
+                "fr": "60 jours ou moins",
+                "de": "60 Tage oder weniger",
+                "es": "60 días o menos"
+              }
+            },
+            {
+              "value": "30",
+              "label": {
+                "en": "30 days or less",
+                "fr": "30 jours ou moins",
+                "de": "30 Tage oder weniger",
+                "es": "30 días o menos"
+              }
+            },
+            {
+              "value": "14",
+              "label": {
+                "en": "14 days or less",
+                "fr": "14 jours ou moins",
+                "de": "14 Tage oder weniger",
+                "es": "14 días o menos"
+              }
+            },
+            {
+              "value": "7",
+              "label": {
+                "en": "7 days or less",
+                "fr": "7 jours ou moins",
+                "de": "7 Tage oder weniger",
+                "es": "7 días o menos"
+              }
+            },
+            {
+              "value": "3",
+              "label": {
+                "en": "3 days or less",
+                "fr": "3 jours ou moins",
+                "de": "3 Tage oder weniger",
+                "es": "3 días o menos"
+              }
+            },
+            {
+              "value": "1",
+              "label": {
+                "en": "1 day or less",
+                "fr": "1 jour ou moins",
+                "de": "1 Tag oder weniger",
+                "es": "1 día o menos"
+              }
+            },
+            {
+              "value": "0",
+              "label": {
+                "en": "On the day it expires",
+                "fr": "Le jour de l’expiration",
+                "de": "Am Tag des Ablaufs",
+                "es": "El día de la caducidad"
+              }
+            }
+          ],
+          "required": true
+        }
+      ],
+      "variables": [
+        {
+          "key": "domain_name",
+          "type": "string",
+          "label": {
+            "en": "Domain",
+            "fr": "Domaine",
+            "de": "Domain",
+            "es": "Dominio"
+          }
+        },
+        {
+          "key": "days_left",
+          "type": "number",
+          "label": {
+            "en": "Days left",
+            "fr": "Jours restants",
+            "de": "Verbleibende Tage",
+            "es": "Días restantes"
+          },
+          "description": {
+            "en": "Negative once expired, -1 when unknown.",
+            "fr": "Négatif une fois expiré, -1 si inconnu.",
+            "de": "Negativ nach Ablauf, -1, wenn unbekannt.",
+            "es": "Negativo una vez caducado, -1 si se desconoce."
+          }
+        },
+        {
+          "key": "expiration_date",
+          "type": "string",
+          "label": {
+            "en": "Expiration date",
+            "fr": "Date d’expiration",
+            "de": "Ablaufdatum",
+            "es": "Fecha de caducidad"
+          },
+          "description": {
+            "en": "Written out, e.g. 19 December 2026.",
+            "fr": "En toutes lettres, ex. 19 décembre 2026.",
+            "de": "Ausgeschrieben, z. B. 19. Dezember 2026.",
+            "es": "Escrita, p. ej. 19 de diciembre de 2026."
+          }
+        },
+        {
+          "key": "expiration_iso",
+          "type": "string",
+          "label": {
+            "en": "Expiration (ISO)",
+            "fr": "Expiration (ISO)",
+            "de": "Ablauf (ISO)",
+            "es": "Caducidad (ISO)"
+          },
+          "description": {
+            "en": "UTC.",
+            "fr": "UTC.",
+            "de": "UTC.",
+            "es": "UTC."
+          }
+        },
+        {
+          "key": "registrar",
+          "type": "string",
+          "label": {
+            "en": "Registrar",
+            "fr": "Registrar",
+            "de": "Registrar",
+            "es": "Registrador"
+          }
+        },
+        {
+          "key": "days",
+          "type": "string",
+          "label": {
+            "en": "Threshold (days)",
+            "fr": "Seuil (jours)",
+            "de": "Schwelle (Tage)",
+            "es": "Umbral (días)"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          },
+          "description": {
+            "en": "A sentence ready for a message.",
+            "fr": "Une phrase prête pour un message.",
+            "de": "Ein Satz für eine Nachricht.",
+            "es": "Una frase lista para un mensaje."
+          }
+        }
+      ]
+    },
+    {
+      "key": "domain_renewed",
+      "label": {
+        "en": "Domain: renewed",
+        "fr": "Domaine : renouvelé",
+        "de": "Domain: verlängert",
+        "es": "Dominio: renovado"
+      },
+      "description": {
+        "en": "The expiration date of the domain moved forward.",
+        "fr": "La date d’expiration du domaine a été repoussée.",
+        "de": "Das Ablaufdatum der Domain wurde verschoben.",
+        "es": "La fecha de caducidad del dominio se ha aplazado."
+      },
+      "fields": [
+        {
+          "key": "domain",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Domain",
+            "fr": "Domaine",
+            "de": "Domain",
+            "es": "Dominio"
+          },
+          "description": {
+            "en": "A domain device. Leave empty for any.",
+            "fr": "Un appareil domaine. Laissez vide pour tous.",
+            "de": "Ein Domain-Gerät. Leer lassen für jedes.",
+            "es": "Un dispositivo de dominio. Vacío para cualquiera."
+          },
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "domain_name",
+          "type": "string",
+          "label": {
+            "en": "Domain",
+            "fr": "Domaine",
+            "de": "Domain",
+            "es": "Dominio"
+          }
+        },
+        {
+          "key": "expiration_date",
+          "type": "string",
+          "label": {
+            "en": "Expiration date",
+            "fr": "Date d’expiration",
+            "de": "Ablaufdatum",
+            "es": "Fecha de caducidad"
+          },
+          "description": {
+            "en": "Written out, e.g. 19 December 2026.",
+            "fr": "En toutes lettres, ex. 19 décembre 2026.",
+            "de": "Ausgeschrieben, z. B. 19. Dezember 2026.",
+            "es": "Escrita, p. ej. 19 de diciembre de 2026."
+          }
+        },
+        {
+          "key": "previous_expiration_date",
+          "type": "string",
+          "label": {
+            "en": "Previous expiration date",
+            "fr": "Ancienne date d’expiration",
+            "de": "Bisheriges Ablaufdatum",
+            "es": "Fecha de caducidad anterior"
+          }
+        },
+        {
+          "key": "expiration_iso",
+          "type": "string",
+          "label": {
+            "en": "Expiration (ISO)",
+            "fr": "Expiration (ISO)",
+            "de": "Ablauf (ISO)",
+            "es": "Caducidad (ISO)"
+          },
+          "description": {
+            "en": "UTC.",
+            "fr": "UTC.",
+            "de": "UTC.",
+            "es": "UTC."
+          }
+        },
+        {
+          "key": "days_left",
+          "type": "number",
+          "label": {
+            "en": "Days left",
+            "fr": "Jours restants",
+            "de": "Verbleibende Tage",
+            "es": "Días restantes"
+          },
+          "description": {
+            "en": "Negative once expired, -1 when unknown.",
+            "fr": "Négatif une fois expiré, -1 si inconnu.",
+            "de": "Negativ nach Ablauf, -1, wenn unbekannt.",
+            "es": "Negativo una vez caducado, -1 si se desconoce."
+          }
+        },
+        {
+          "key": "registrar",
+          "type": "string",
+          "label": {
+            "en": "Registrar",
+            "fr": "Registrar",
+            "de": "Registrar",
+            "es": "Registrador"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          },
+          "description": {
+            "en": "A sentence ready for a message.",
+            "fr": "Une phrase prête pour un message.",
+            "de": "Ein Satz für eine Nachricht.",
+            "es": "Una frase lista para un mensaje."
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "get_domain",
+      "label": {
+        "en": "Domain: read the expiration",
+        "fr": "Domaine : lire l’expiration",
+        "de": "Domain: Ablauf lesen",
+        "es": "Dominio: leer la caducidad"
+      },
+      "description": {
+        "en": "The expiration of a domain, for a message.",
+        "fr": "L’expiration d’un domaine, pour un message.",
+        "de": "Der Ablauf einer Domain, für eine Nachricht.",
+        "es": "La caducidad de un dominio, para un mensaje."
+      },
+      "timeout_seconds": 60,
+      "fields": [
+        {
+          "key": "domain",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Domain",
+            "fr": "Domaine",
+            "de": "Domain",
+            "es": "Dominio"
+          },
+          "description": {
+            "en": "Leave empty for the first domain of the configuration.",
+            "fr": "Laissez vide pour le premier domaine de la configuration.",
+            "de": "Leer lassen für die erste Domain der Konfiguration.",
+            "es": "Vacío para el primer dominio de la configuración."
+          },
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "key": "domain_name",
+          "type": "string",
+          "label": {
+            "en": "Domain",
+            "fr": "Domaine",
+            "de": "Domain",
+            "es": "Dominio"
+          }
+        },
+        {
+          "key": "days_left",
+          "type": "number",
+          "label": {
+            "en": "Days left",
+            "fr": "Jours restants",
+            "de": "Verbleibende Tage",
+            "es": "Días restantes"
+          },
+          "description": {
+            "en": "Negative once expired, -1 when unknown.",
+            "fr": "Négatif une fois expiré, -1 si inconnu.",
+            "de": "Negativ nach Ablauf, -1, wenn unbekannt.",
+            "es": "Negativo una vez caducado, -1 si se desconoce."
+          }
+        },
+        {
+          "key": "expiration_date",
+          "type": "string",
+          "label": {
+            "en": "Expiration date",
+            "fr": "Date d’expiration",
+            "de": "Ablaufdatum",
+            "es": "Fecha de caducidad"
+          },
+          "description": {
+            "en": "Written out, e.g. 19 December 2026.",
+            "fr": "En toutes lettres, ex. 19 décembre 2026.",
+            "de": "Ausgeschrieben, z. B. 19. Dezember 2026.",
+            "es": "Escrita, p. ej. 19 de diciembre de 2026."
+          }
+        },
+        {
+          "key": "expiration_iso",
+          "type": "string",
+          "label": {
+            "en": "Expiration (ISO)",
+            "fr": "Expiration (ISO)",
+            "de": "Ablauf (ISO)",
+            "es": "Caducidad (ISO)"
+          },
+          "description": {
+            "en": "UTC.",
+            "fr": "UTC.",
+            "de": "UTC.",
+            "es": "UTC."
+          }
+        },
+        {
+          "key": "registrar",
+          "type": "string",
+          "label": {
+            "en": "Registrar",
+            "fr": "Registrar",
+            "de": "Registrar",
+            "es": "Registrador"
+          }
+        },
+        {
+          "key": "state",
+          "type": "string",
+          "label": {
+            "en": "State",
+            "fr": "État",
+            "de": "Zustand",
+            "es": "Estado"
+          },
+          "description": {
+            "en": "active, expiring, expired, redemption or pending_delete.",
+            "fr": "active, expiring (bientôt), expired (expiré), redemption ou pending_delete.",
+            "de": "active, expiring (bald), expired (abgelaufen), redemption oder pending_delete.",
+            "es": "active, expiring (pronto), expired (caducado), redemption o pending_delete."
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          },
+          "description": {
+            "en": "A sentence ready for a message.",
+            "fr": "Une phrase prête pour un message.",
+            "de": "Ein Satz für eine Nachricht.",
+            "es": "Una frase lista para un mensaje."
+          }
+        }
+      ]
+    }
+  ]
+}
