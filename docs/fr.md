@@ -10,7 +10,7 @@ Cette intégration communautaire n’est affiliée à aucun registre ni registra
 
 ## Prérequis
 
-- Gladys Assistant 5.1.0 ou plus récent.
+- Gladys Assistant 5.3.0 ou plus récent.
 - Un accès à Internet depuis Gladys. Ni compte, ni clé.
 
 ## Configuration

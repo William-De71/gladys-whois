@@ -10,7 +10,7 @@ This community integration is not affiliated with any registry or registrar.
 
 ## Requirements
 
-- Gladys Assistant 5.1.0 or newer.
+- Gladys Assistant 5.3.0 or newer.
 - Internet access from Gladys. No account, no key.
 
 ## Configuration

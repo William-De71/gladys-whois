@@ -10,7 +10,7 @@ Diese Community-Integration ist mit keiner Registry und keinem Registrar verbund
 
 ## Voraussetzungen
 
-- Gladys Assistant 5.1.0 oder neuer.
+- Gladys Assistant 5.3.0 oder neuer.
 - Internetzugang von Gladys. Kein Konto, kein Schlüssel.
 
 ## Konfiguration
