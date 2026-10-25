@@ -5,6 +5,12 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/). This file is generated at
 each release from the Conventional Commits: do not edit it by hand.
 
+## [0.2.0] - 2026-10-25
+
+### Added
+
+- require Gladys 5.3 and declare catalog keywords ([613b538](https://github.com/William-De71/gladys-whois/commit/613b5384b597138a7e2cbe4bd6118ea9e987e74d))
+
 ## [0.1.1] - 2026-10-24
 
 ### Security
@@ -23,5 +29,6 @@ each release from the Conventional Commits: do not edit it by hand.
 - "Check a domain", "Check now" and "Diagnostic" buttons; answers and fired thresholds kept in /data, so a restart neither asks the registries again nor repeats a scene.
 - English, French, German and Spanish everywhere: settings, devices, widget, scenes and documentation.
 
+[0.2.0]: https://github.com/William-De71/gladys-whois/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/William-De71/gladys-whois/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/William-De71/gladys-whois/releases/tag/v0.1.0

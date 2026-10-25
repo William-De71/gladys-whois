@@ -1,6 +1,6 @@
 {
   "name": "gladys-whois",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "description": "External Gladys Assistant integration that follows the expiration of domain names (RDAP and whois): days left, registrar, scenes and a dashboard widget.",
   "homepage": "https://github.com/William-De71/gladys-whois",
